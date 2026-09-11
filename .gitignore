@@ -39,3 +39,6 @@ src/clanker_chat/icons.py
 *~
 .DS_Store
 Thumbs.db
+
+# --- agent skills live globally, not in this repo ---
+.agents/
