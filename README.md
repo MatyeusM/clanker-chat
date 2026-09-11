@@ -3,7 +3,7 @@
 A chat application reminiscent of mIRC, built with Python (Starlette) and
 htmx 4. No JavaScript framework, no websockets — the server returns HTML
 fragments and htmx swaps them into the page. This started as a for-fun
-project and accidentally became a real one.
+project, but i like it so much so I want to archive it.
 
 ## Run it
 
