@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block title %}clanker chat — join{% endblock %} {% block main %}
+<section class="landing">
+  <h1>join the <span class="c-green">clank</span></h1>
+  <p class="dim">
+    pick a nickname + channel. your id lives in localStorage — lose it, get a new one.
+  </p>
+  <form id="join-form" hx-post="/join" hx-target="#join-err" hx-swap="innerHTML">
+    <label
+      >nickname <input name="nickname" id="f-nick" maxlength="32" required autocomplete="off"
+    /></label>
+    <label
+      >channel
+      <input
+        name="channel"
+        id="f-chan"
+        maxlength="32"
+        required
+        autocomplete="off"
+        placeholder="lobby"
+    /></label>
+    <label
+      >password
+      <input
+        name="password"
+        type="password"
+        maxlength="64"
+        autocomplete="off"
+        placeholder="only if locked"
+    /></label>
+    <input type="hidden" name="uid" id="f-uid" />
+    <button type="submit">/join →</button>
+  </form>
+  <p id="join-err"></p>
+  <h2>channels</h2>
+  <div
+    id="chanlist"
+    class="pills"
+    hx-get="/channels"
+    hx-trigger="load, every 5s"
+    hx-swap="innerHTML"
+  >
+    {% for c in channels %}<button type="button" class="pill" onclick="fillChannel('{{ c.name }}')">
+      {% if c.locked %}<svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ lock }}" /></svg>{%
+      endif %}#{{ c.name }}</button
+    >{% endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block title %}#{{ channel }} — clanker chat{% endblock %} {% block head
+%}
+<meta name="htmx-config" content='{"defaultSwap": "innerHTML"}' />
+{% endblock %} {% block main %}
+<section class="chatlay" data-channel="{{ channel }}">
+  <aside
+    id="sidebar"
+    hx-get="/c/{{ channel }}/sidebar"
+    hx-trigger="load, every 5s"
+    hx-swap="innerHTML"
+  ></aside>
+  <div class="stage">
+    <div class="chanbar">
+      <span>#{{ channel }}</span>{% if locked %}<svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="{{ lock }}" /></svg
+      >{% endif %}<button
+        id="histbtn"
+        hx-get="/c/{{ channel }}/history"
+        hx-vals="js:{before: firstMsgId()}"
+        hx-target="#log"
+        hx-swap="afterbegin"
+        hx-on:htmx:after:request="this.remove()"
+      >
+        ⇪ 24h history
+      </button>
+    </div>
+    <div id="log" class="log">{{ messages | safe }}</div>
+    <div
+      id="msgpoll"
+      hx-get="/c/{{ channel }}/messages"
+      hx-trigger="every 500ms"
+      hx-vals="js:{after: lastMsgId()}"
+      hx-target="#log"
+      hx-swap="beforeend"
+    ></div>
+    <form
+      id="send"
+      hx-post="/c/{{ channel }}/messages"
+      hx-target="#log"
+      hx-swap="beforeend"
+      hx-encoding="multipart/form-data"
+      hx-on:htmx:after:request="if(event.detail.ctx.response.status < 400) this.reset()"
+    >
+      <span class="prompt">&gt;</span>
+      <input
+        name="content"
+        id="msgin"
+        maxlength="2000"
+        autocomplete="off"
+        placeholder="msg #{{ channel }} — @nick to mention, !help for commands"
+      />
+      <div id="complete" class="completer" hidden></div>
+      <label class="clip" title="attach file"
+        ><svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ clip }}" /></svg
+        ><input type="file" name="file" hidden
+      /></label>
+      <button type="submit">send</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

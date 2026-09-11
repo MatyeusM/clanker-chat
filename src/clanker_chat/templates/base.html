@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}clanker chat{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/app.css" />
+    <script type="module" src="/static/js/app.js"></script>
+    {% block head %}{% endblock %}
+  </head>
+  <body>
+    <header class="top">
+      <a class="logo" href="/">clanker<span class="c-green">_</span>chat</a>
+      <nav><button id="theme-toggle" type="button" title="toggle light/dark">◐ theme</button></nav>
+    </header>
+    <main>{% block main %}{% endblock %}</main>
+    <footer class="foot"><span>mIRC-ish · htmx4 · msgs pruned after 24h</span></footer>
+  </body>
+</html>

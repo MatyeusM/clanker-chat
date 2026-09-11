@@ -1,0 +1,37 @@
+[tools]
+node = "26.8.2"
+pnpm = "12.3.4"
+python = "3.14.7"
+uv = "0.12.11"
+
+[tasks.setup]
+run = ["pnpm install", "uv sync", "node scripts/build.mjs"]
+
+[tasks.dev]
+depends = ["setup"]
+run = "uv run uvicorn clanker_chat.main:app --reload"
+
+[tasks.build]
+depends = ["setup"]
+run = "uv build"
+
+[tasks.clean]
+description = "Remove generated files, caches, and the venv (run setup afterwards)"
+run = [
+  "rm -rf data .ruff_cache .pytest_cache .venv static/js/htmx.esm.min.js src/clanker_chat/icons.py",
+  "find . -type d -name __pycache__ -not -path './node_modules/*' -exec rm -rf {} +",
+]
+
+[tasks.fmt]
+description = "Format everything: ruff format (python) + oxfmt (js/css)"
+run = ["uv run ruff format src tests", "pnpm run fmt"]
+
+[tasks.lint]
+description = "Lint everything: ruff check + oxlint + stylelint"
+depends = ["setup"]
+run = ["uv run ruff check src tests", "pnpm run lint", "pnpm run stylelint"]
+
+[tasks.check]
+description = "Full gate: lint + format-check + tests"
+depends = ["setup", "lint"]
+run = ["uv run ruff format --check src tests", "uv run pytest tests -q", "pnpm run fmt:check"]

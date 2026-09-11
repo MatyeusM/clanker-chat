@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block title %}#{{ channel }} is locked{% endblock %} {% block main %}
+<section class="landing">
+  <h1>
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="{{ lock }}" /></svg> #{{ channel }} is
+    locked
+  </h1>
+  <p class="dim">this channel needs a password. ask an owner, or pick another channel.</p>
+  <form id="join-form" hx-post="/join" hx-target="#join-err" hx-swap="innerHTML">
+    <label
+      >nickname <input name="nickname" id="f-nick" maxlength="32" required autocomplete="off"
+    /></label>
+    <input type="hidden" name="channel" value="{{ channel }}" />
+    <label
+      >password <input name="password" type="password" maxlength="64" required autocomplete="off"
+    /></label>
+    <input type="hidden" name="uid" id="f-uid" />
+    <button type="submit">unlock →</button>
+  </form>
+  <p id="join-err"></p>
+</section>
+{% endblock %}
