@@ -52,14 +52,14 @@ generated files, caches, and the venv.
 Type these in the chat box (Tab completes them). Replies are ephemeral —
 only you see them, except kick notices which are announced to the channel.
 
-| Command                | Who        | Effect                                  |
-| ---------------------- | ---------- | --------------------------------------- |
-| `!help`                | anyone     | list commands                           |
-| `!nick <newname>`      | anyone     | change your nickname                    |
-| `!auth <pw>`           | anyone     | become a channel owner (needs owner pw) |
-| `!owner <newpw>`       | owner      | set the owner password                  |
-| `!setpassword <pw\|off>` | owner    | lock / unlock the channel               |
-| `!kick <nick>`         | owner      | kick a non-owner (they can rejoin)      |
+| Command                  | Who    | Effect                                  |
+| ------------------------ | ------ | --------------------------------------- |
+| `!help`                  | anyone | list commands                           |
+| `!nick <newname>`        | anyone | change your nickname                    |
+| `!auth <pw>`             | anyone | become a channel owner (needs owner pw) |
+| `!owner <newpw>`         | owner  | set the owner password                  |
+| `!setpassword <pw\|off>` | owner  | lock / unlock the channel               |
+| `!kick <nick>`           | owner  | kick a non-owner (they can rejoin)      |
 
 Locked channels show a lock icon in every channel list. Owners wear `@`
 in the roster. Owners cannot be kicked.
